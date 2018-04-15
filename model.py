@@ -47,8 +47,12 @@ class Player():
     def __init__(self):
         self.Vx_Max = VX_MAX
         self.Vx = 0
+
         self.angle_max = ANGLE_MAX
+        self.V_angle = 0
+        self.angle_unit = 0.2
         self.angle = 0
+
         self.pos = (0, 0)
 
         self.go_up = False
@@ -71,9 +75,25 @@ class Player():
 
     def move(self):
         if self.go_right:
-            self.angle -= 1
+            if  self.V_angle - self.angle_unit > -self.angle_max:
+                self.V_angle -= self.angle_unit
+
+
         elif self.go_left:
-            self.angle += 1
+            if self.V_angle + self.angle_unit < self.angle_max:
+                self.V_angle += self.angle_unit
+        else:
+            if abs(self.V_angle) < 0.1:
+                self.V_angle = 0
+
+            elif self.V_angle < 0:
+                self.V_angle += self.angle_unit
+
+            elif self.V_angle > 0:
+                self.V_angle -= self.angle_unit
+
+        print(self.V_angle)
+        self.angle += self.V_angle
 
 class Model:
     def __init__(self):
