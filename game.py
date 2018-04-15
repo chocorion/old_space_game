@@ -19,7 +19,7 @@ if len(sys.argv) == 2:
 
 model = Model()
 model.load_map(map_file)
-event_manager = Event_Manager()
+event_manager = Event_Manager(model)
 controller = Controller(event_manager)
 view = View(model)
 

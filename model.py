@@ -6,7 +6,7 @@ class Event_Manager:
     def __init__(self, model):
         self.model = model
 
-    def qui():
+    def quit(self):
         return False
 
 class Map:
