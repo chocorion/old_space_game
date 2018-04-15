@@ -1,12 +1,16 @@
 #!/usr/bin/python3
 import pygame
 import sys
+
 from model import *
 from view import *
 
 pygame.display.init()
+pygame.font.init()
 clock = pygame.time.Clock()
 FPS = 60
+
+
 
 map_file = DEFAULT_MAP
 if len(sys.argv) == 2:
@@ -19,6 +23,8 @@ view = View(model)
 
 while True:
     dt = clock.tick(FPS)
+
+    view.tick()
     #print(dt)
 
 pygame.quit()
