@@ -22,7 +22,7 @@ class View:
     def render_map(self):
         map = self.model.map
 
-        self.win.blit(self.resize(self.sprite["player"][0], 40, 40), map.player_pos)
+        self.win.blit(self.resize(self.sprite["player"][0], 40, 40), self.model.player.pos)
 
         #for element in map.array:
 
