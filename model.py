@@ -12,7 +12,7 @@ class Event_Manager:
         return False
 
     def move_player(self, dir, state):
-        self.model.update_move(dir, state)
+        self.model.player.update_move(dir, state)
         return True
 
 class Map:
@@ -55,6 +55,26 @@ class Player():
         self.go_left = False
         self.go_right = False
 
+    def update_move(self, dir, state):
+        if dir == "up":
+            self.go_up = state
+
+        elif dir == "left":
+            self.go_left = state
+            if state:
+                self.go_right = False
+
+        elif dir == "right":
+            self.go_right = state
+            if state:
+                self.go_left = False
+
+    def move(self):
+        if self.go_right:
+            self.angle -= 1
+        elif self.go_left:
+            self.angle += 1
+
 class Model:
     def __init__(self):
         self.player = Player()
@@ -66,17 +86,5 @@ class Model:
         self.map_path = map_name
         self.map.load(map_name)
 
-    def update_move(self, dir, state):
-        if dir == "up":
-            self.player.go_up = state
-            print("up", state)
-
-        elif dir == "left":
-            self.player.go_left = state
-            print("left", state)
-
-        elif dir == "right":
-            self.player.go_right = state
-            print("right", state)
-
-    #def move_player(self, dir):
+    def tick(self):
+        self.player.move()

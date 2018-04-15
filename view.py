@@ -22,7 +22,8 @@ class View:
     def render_map(self):
         map = self.model.map
 
-        self.win.blit(self.resize(self.sprite["player"][0], 40, 40), self.model.player.pos)
+        player_surface = self.resize(self.sprite["player"][0], 40, 40)
+        self.win.blit(pygame.transform.rotate(player_surface, self.model.player.angle), self.model.player.pos)
 
         #for element in map.array:
 

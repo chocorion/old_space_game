@@ -28,6 +28,7 @@ while True:
     dt = clock.tick(FPS)
     if not controller.tick():
         break
+    model.tick()
     view.tick()
     #print(dt)
 
