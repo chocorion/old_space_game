@@ -2,6 +2,13 @@ import sys
 
 DEFAULT_MAP = "maps/map_0.map"
 
+class Event_Manager:
+    def __init__(self, model):
+        self.model = model
+
+    def qui():
+        return False
+
 class Map:
     def __init__(self):
         self.array = []
