@@ -27,7 +27,7 @@ class View:
         old_rect = pygame.Surface.get_rect(player_surface)
         old_center = old_rect.center
 
-        player_surface = pygame.transform.rotate(player_surface, self.model.player.angle)
+        player_surface = pygame.transform.rotate(player_surface, -(self.model.player.angle + 90))
         new_rect = pygame.Surface.get_rect(player_surface)
         new_rect.center = old_center
 

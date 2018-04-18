@@ -1,7 +1,8 @@
 import sys
+from math import *
 
 DEFAULT_MAP = "maps/map_0.map"
-VX_MAX = 20
+V_MAX = 5
 ANGLE_MAX = 20
 
 class Event_Manager:
@@ -45,13 +46,14 @@ class Map:
 
 class Player():
     def __init__(self):
-        self.Vx_Max = VX_MAX
-        self.Vx = 0
+        self.V_Max = V_MAX
+        self.V = 0
+        self.V_unit = 0.5
 
         self.angle_max = ANGLE_MAX
         self.V_angle = 0
         self.angle_unit = 0.2
-        self.angle = 0
+        self.angle = 90
 
         self.pos = (0, 0)
 
@@ -74,12 +76,28 @@ class Player():
                 self.go_left = False
 
     def move(self):
-        if self.go_right:
+        if self.go_up:
+            if self.V + self.V_unit < self.V_Max:
+                self.V += self.V_unit
+        else:
+            if self.V > 0:
+                if self.V - self.V_unit > 0:
+                    self.V -= self.V_unit
+                else:
+                    self.V = 0
+
+        delta_x = self.V * cos((self.angle)%360 * 3.14/180)
+        delta_y = self.V * sin((self.angle)%360 * 3.14/180)
+        print(self.angle, delta_x, delta_y)
+
+        self.pos = (self.pos[0] + delta_x, self.pos[1] + delta_y)
+
+        if self.go_left:
             if  self.V_angle - self.angle_unit > -self.angle_max:
                 self.V_angle -= self.angle_unit
 
 
-        elif self.go_left:
+        elif self.go_right:
             if self.V_angle + self.angle_unit < self.angle_max:
                 self.V_angle += self.angle_unit
         else:
@@ -92,8 +110,7 @@ class Player():
             elif self.V_angle > 0:
                 self.V_angle -= self.angle_unit
 
-        print(self.V_angle)
-        self.angle += self.V_angle
+        self.angle = (self.V_angle + self.angle)%360
 
 class Model:
     def __init__(self):
