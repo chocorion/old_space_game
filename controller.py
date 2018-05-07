@@ -8,7 +8,6 @@ class Controller:
         pygame.key.set_repeat(1,200)    #Permet la répétition de touche, interval de 200 ms
 
     def tick(self):
-
         for event in pygame.event.get():
             cont = True
             if event.type == pygame.QUIT:

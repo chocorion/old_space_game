@@ -1,3 +1,7 @@
+## TODO:
+#   * Fonction permettant de faire la rotation d'une image selon un angle donné à utiliser dans render_map
+
+
 from model import *
 import pygame
 
@@ -14,15 +18,17 @@ class View:
         self.width = model.map.width
         self.height = model.map.height
 
-        self.win = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)
+        self.win = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)     #Faudra bien penser à gérer la taille :/
 
         self.sprite = {
             "player": [pygame.image.load(sprite) for sprite in SPRITE_PLAYER]
         }
 
     def render_map(self):
+        """Fonction permettant de dessiner le jeu à l'écran"""
         map = self.model.map
 
+        #Vaut mieux une fonction qui tourne une image celon un certain angle, a faire
         player_surface = self.resize(self.sprite["player"][0], 40, 40)
 
         old_rect = pygame.Surface.get_rect(player_surface)
@@ -37,6 +43,7 @@ class View:
 
 
         #for element in map.array:
+        #Faire chaque objet avec de base une fonction de render, qu'on "surchargera" pour les spécificitées
 
     def resize(self, surface, width, height):
         return pygame.transform.scale(surface, (width, height))

@@ -1,3 +1,5 @@
+## TODO:
+#   * Faire varier la vitesse angulaire maximum en fonction de la vitesse actuelle du joueur
 import sys
 from math import *
 
@@ -56,7 +58,7 @@ class Player():
     def __init__(self):
         self.V_Max = V_MAX          #Vitesse maximum que peut atteindre le joueur
         self.V = 0                  #Vitesse actuelle du joueur
-        self.V_unit = 0.5           #Valeur de l'accélération qui peur être apportée au joueur
+        self.V_unit = 0.1           #Valeur de l'accélération qui peur être apportée au joueur
 
         self.angle_max = ANGLE_MAX  #Vitesse angulaire maximum
         self.V_angle = 0            #Vitesse angulaire actuelle du joueur
