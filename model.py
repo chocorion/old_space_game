@@ -6,6 +6,7 @@ V_MAX = 5
 ANGLE_MAX = 20
 
 class Event_Manager:
+    """Class gérant tous les événements du jeu"""
     def __init__(self, model):
         self.model = model
 
@@ -16,14 +17,20 @@ class Event_Manager:
         self.model.player.update_move(dir, state)
         return True
 
+    def shoot(self, state):
+        sys.write.stderr("Shoot function not implemented yet !\n")
+        return True
+
 class Map:
+    """Class modélisant la map du jeu"""
     def __init__(self, model):
-        self.array = []
+        self.array = []     #Liste contenant tous les objets du jeu
         self.width = 0
         self.height = 0
         self.model = model
 
     def load(self, filename):
+        """Lecture du fichier passé en argument"""
         player_pos = (0, 0)
         try:
             file = open(filename, "r")
@@ -45,23 +52,25 @@ class Map:
         return player_pos
 
 class Player():
+    """Class modélisant le joueur"""
     def __init__(self):
-        self.V_Max = V_MAX
-        self.V = 0
-        self.V_unit = 0.5
+        self.V_Max = V_MAX          #Vitesse maximum que peut atteindre le joueur
+        self.V = 0                  #Vitesse actuelle du joueur
+        self.V_unit = 0.5           #Valeur de l'accélération qui peur être apportée au joueur
 
-        self.angle_max = ANGLE_MAX
-        self.V_angle = 0
-        self.angle_unit = 0.2
-        self.angle = 90
+        self.angle_max = ANGLE_MAX  #Vitesse angulaire maximum
+        self.V_angle = 0            #Vitesse angulaire actuelle du joueur
+        self.angle_unit = 0.2       #Valeur de "l'accélération angulaire" du joueur
+        self.angle = 90             #Angle atuelle du joueur
 
-        self.pos = (0, 0)
+        self.pos = (0, 0)           #Position (x, y) du joueur dans le jeu
 
-        self.go_up = False
-        self.go_left = False
-        self.go_right = False
+        self.go_up = False          #Est-ce que le joueur avance ?
+        self.go_left = False        #                     va à gauche ?
+        self.go_right = False       #                        à droite ?
 
     def update_move(self, dir, state):
+        """Change l'état du joueur en fonction de la diréction donnée"""
         if dir == "up":
             self.go_up = state
 
@@ -76,6 +85,7 @@ class Player():
                 self.go_left = False
 
     def move(self):
+        """Fonction gérant le mouvement du joueur"""
         if self.go_up:
             if self.V + self.V_unit < self.V_Max:
                 self.V += self.V_unit
@@ -113,6 +123,7 @@ class Player():
         self.angle = (self.V_angle + self.angle)%360
 
 class Model:
+    """Model du jeu"""
     def __init__(self):
         self.player = Player()
         self.map = Map(self)

@@ -2,10 +2,10 @@ import pygame
 from model import *
 
 class Controller:
-
+    """Gère les interactions utilisateurs"""
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        pygame.key.set_repeat(1,200)
+        pygame.key.set_repeat(1,200)    #Permet la répétition de touche, interval de 200 ms
 
     def tick(self):
 

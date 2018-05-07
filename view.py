@@ -8,6 +8,7 @@ SPRITE_PLAYER = ["assets/player/ship_00.png"]
 
 
 class View:
+    """Class définissant la vue"""
     def __init__(self, model):
         self.model = model
         self.width = model.map.width
