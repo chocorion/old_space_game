@@ -62,7 +62,7 @@ class Player():
 
         self.angle_max = ANGLE_MAX  #Vitesse angulaire maximum
         self.V_angle = 0            #Vitesse angulaire actuelle du joueur
-        self.angle_unit = 0.2       #Valeur de "l'accélération angulaire" du joueur
+        self.angle_unit = 0.2      #Valeur de "l'accélération angulaire" du joueur
         self.angle = 90             #Angle atuelle du joueur
 
         self.pos = (0, 0)           #Position (x, y) du joueur dans le jeu
@@ -94,33 +94,39 @@ class Player():
         else:
             if self.V > 0:
                 if self.V - self.V_unit > 0:
-                    self.V -= self.V_unit
+                    self.V -= self.V_unit/4
                 else:
                     self.V = 0
 
         delta_x = self.V * cos((self.angle)%360 * 3.14/180)
         delta_y = self.V * sin((self.angle)%360 * 3.14/180)
-        print(self.angle, delta_x, delta_y)
+
+        #print("angle ", self.angle, " delta x ",delta_x, " delta_y ", delta_y)
 
         self.pos = (self.pos[0] + delta_x, self.pos[1] + delta_y)
 
+        angle_limit = 1 - (self.V / self.V_Max)/3
+        if angle_limit < 0.3:
+            angle_limit = 0.3
+        print(angle_limit)
+
         if self.go_left:
             if  self.V_angle - self.angle_unit > -self.angle_max:
-                self.V_angle -= self.angle_unit
+                self.V_angle -= self.angle_unit * angle_limit
 
 
         elif self.go_right:
             if self.V_angle + self.angle_unit < self.angle_max:
-                self.V_angle += self.angle_unit
+                self.V_angle += self.angle_unit * angle_limit
         else:
             if abs(self.V_angle) < 0.1:
                 self.V_angle = 0
 
             elif self.V_angle < 0:
-                self.V_angle += self.angle_unit
+                self.V_angle += self.angle_unit * angle_limit
 
             elif self.V_angle > 0:
-                self.V_angle -= self.angle_unit
+                self.V_angle -= self.angle_unit * angle_limit
 
         self.angle = (self.V_angle + self.angle)%360
 
