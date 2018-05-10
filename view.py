@@ -31,7 +31,7 @@ class View:
         map = self.model.map
 
         #Vaut mieux une fonction qui tourne une image celon un certain angle, a faire
-        player_surface = self.resize(self.sprite["player"][0], 40, 40)
+        player_surface = self.resize(self.sprite["player"][0], self.model.player.h, self.model.player.w)
         rotate_player_surface = self.rotate(player_surface, self.model.player.angle)
 
         self.win.blit(rotate_player_surface[0], rotate_player_surface[1].move(self.model.player.pos))

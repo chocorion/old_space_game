@@ -2,10 +2,17 @@
 #   * Faire varier la vitesse angulaire maximum en fonction de la vitesse actuelle du joueur
 import sys
 from math import *
+from random import randrange
 
 DEFAULT_MAP = "maps/map_0.map"
 V_MAX = 5
 ANGLE_MAX = 20
+
+def check_collision(x1, y1, h1, w1, x2, y2, h2, w2):
+    if (x1 > x2 and x1 < x2 + w2) or (x1 + w1 > x2 and x1 + w1 < x2 + w2):
+        if (y1 > y2 and y1 < y2 + h2) or (y1 + h1 > y2 and y1 + h1 < y2 + h2):
+            return True
+    return False
 
 class Event_Manager:
     """Class gérant tous les événements du jeu"""
@@ -54,6 +61,9 @@ class Map:
             sys.stderr.write("Error in load map, can't open file.\n")
         return player_pos
 
+    def add_random_asteroid(self):
+        """self, speed, angle, rotation_angle, rotation_speed, pos, type, width, height"""
+
 class Object():
     def __init__(self, speed, angle, rotation_angle, rotation_speed, pos, type, width, height):
         self.speed = speed
@@ -91,6 +101,8 @@ class Player():
         self.angle = 90             #Angle atuelle du joueur
 
         self.pos = (0, 0)           #Position (x, y) du joueur dans le jeu
+        self.h = 40
+        self.w = 40
 
         self.go_up = False          #Est-ce que le joueur avance ?
         self.go_left = False        #                     va à gauche ?
@@ -176,12 +188,21 @@ class Model:
         self.map = Map(self)
         self.map_path = DEFAULT_MAP
 
-
     def load_map(self, map_name):
         self.map_path = map_name
         self.map.load(map_name)
+
+    def check_player_collision(self):
+        for element in self.map.array:
+            if check_collision(
+                self.player.pos[0], self.player.pos[1], self.player.w, self.player.h,
+                element.pos[0], element.pos[1], element.width, element.height):
+                print("COLLISION !")
+        print(" ")
+
 
     def tick(self):
         self.player.move()
         for element in self.map.array:
             element.play()
+        self.check_player_collision()
