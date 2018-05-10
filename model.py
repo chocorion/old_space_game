@@ -20,7 +20,7 @@ class Event_Manager:
         return True
 
     def shoot(self, state):
-        sys.write.stderr("Shoot function not implemented yet !\n")
+        sys.stderr.write("Shoot function not implemented yet !\n")
         return True
 
 class Map:
@@ -70,11 +70,14 @@ class Player():
         self.go_up = False          #Est-ce que le joueur avance ?
         self.go_left = False        #                     va à gauche ?
         self.go_right = False       #                        à droite ?
+        self.go_down = False        #Frein
 
     def update_move(self, dir, state):
         """Change l'état du joueur en fonction de la diréction donnée"""
-        if dir == "up":
+        if dir == "up":     #Grosse duplication de code bien moche à changer
             self.go_up = state
+            if state:
+                self.go_down = False
 
         elif dir == "left":
             self.go_left = state
@@ -86,11 +89,23 @@ class Player():
             if state:
                 self.go_left = False
 
+        elif dir == "down":
+            self.go_down = state
+            if state:
+                self.go_up = False
+
     def move(self):
         """Fonction gérant le mouvement du joueur"""
         if self.go_up:
             if self.V + self.V_unit < self.V_Max:
                 self.V += self.V_unit
+
+        elif self.go_down:
+            if self.V > 0:
+                if self.V - self.V_unit > 0:
+                    self.V -= self.V_unit
+                else:
+                    self.V = 0
         else:
             if self.V > 0:
                 if self.V - self.V_unit > 0:
@@ -98,8 +113,8 @@ class Player():
                 else:
                     self.V = 0
 
-        delta_x = self.V * cos((self.angle)%360 * 3.14/180)
-        delta_y = self.V * sin((self.angle)%360 * 3.14/180)
+        delta_x = self.V * cos((self.angle - 90)%360 * 3.14/180)
+        delta_y = self.V * sin((self.angle - 90)%360 * 3.14/180)
 
         #print("angle ", self.angle, " delta x ",delta_x, " delta_y ", delta_y)
 
@@ -108,7 +123,7 @@ class Player():
         angle_limit = 1 - (self.V / self.V_Max)/3
         if angle_limit < 0.3:
             angle_limit = 0.3
-        print(angle_limit)
+        print(self.angle)
 
         if self.go_left:
             if  self.V_angle - self.angle_unit > -self.angle_max:

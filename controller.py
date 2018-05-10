@@ -25,6 +25,9 @@ class Controller:
                 elif event.key == pygame.K_UP:
                     cont = self.event_manager.move_player("up", event.type == pygame.KEYDOWN)
 
+                elif event.key == pygame.K_DOWN:
+                    cont = self.event_manager.move_player("down", event.type == pygame.KEYDOWN)
+
             if not cont: return False
 
         return True
