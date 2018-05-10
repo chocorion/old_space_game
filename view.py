@@ -30,20 +30,26 @@ class View:
 
         #Vaut mieux une fonction qui tourne une image celon un certain angle, a faire
         player_surface = self.resize(self.sprite["player"][0], 40, 40)
-
-        old_rect = pygame.Surface.get_rect(player_surface)
-        old_center = old_rect.center
-
-        player_surface = pygame.transform.rotate(player_surface, -(self.model.player.angle))
-        new_rect = pygame.Surface.get_rect(player_surface)
-        new_rect.center = old_center
+        rotate_player_surface = self.rotate(player_surface, self.model.player.angle)
 
 
-        self.win.blit(player_surface, new_rect.move(self.model.player.pos))
+
+        self.win.blit(rotate_player_surface[0], rotate_player_surface[1].move(self.model.player.pos))
 
 
         #for element in map.array:
         #Faire chaque objet avec de base une fonction de render, qu'on "surchargera" pour les spécificitées
+
+    def rotate(self, surface, angle):
+        old_rect = pygame.Surface.get_rect(surface)
+        old_center = old_rect.center
+
+        new_surface = pygame.transform.rotate(surface, - angle)
+        new_rect = pygame.Surface.get_rect(new_surface)
+        new_rect.center = old_center
+
+        return (new_surface, new_rect)
+
 
     def resize(self, surface, width, height):
         return pygame.transform.scale(surface, (width, height))

@@ -53,6 +53,18 @@ class Map:
             sys.stderr.write("Error in load map, can't open file.\n")
         return player_pos
 
+class Object():
+    def __init__(self):
+        self.speed = 0
+        self.angle = 0
+        self.pos = (0, 0)
+
+    def calculate_new_coord(self):
+        delta_x = self.speed * cos((self.angle - 90)%360 * 3.14/180)
+        delta_y = self.speed * sin((self.angle - 90)%360 * 3.14/180)
+
+        return (self.pos[0] + delta_x, self.pos[1] + delta_y)
+
 class Player():
     """Class modélisant le joueur"""
     def __init__(self):
