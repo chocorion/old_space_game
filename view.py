@@ -9,6 +9,7 @@ DEFAULT_WIDTH = 700
 DEFAULT_HEIGHT = 1000
 
 SPRITE_PLAYER = ["assets/player/ship_00.png"]
+SPRITE_ASTEROID = ["assets/asteroid/asteroid_00.png"]
 
 
 class View:
@@ -21,7 +22,8 @@ class View:
         self.win = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)     #Faudra bien penser à gérer la taille :/
 
         self.sprite = {
-            "player": [pygame.image.load(sprite) for sprite in SPRITE_PLAYER]
+            "player": [pygame.image.load(sprite) for sprite in SPRITE_PLAYER],
+            "asteroid": [pygame.image.load(sprite) for sprite in SPRITE_ASTEROID]
         }
 
     def render_map(self):
@@ -32,13 +34,18 @@ class View:
         player_surface = self.resize(self.sprite["player"][0], 40, 40)
         rotate_player_surface = self.rotate(player_surface, self.model.player.angle)
 
-
-
         self.win.blit(rotate_player_surface[0], rotate_player_surface[1].move(self.model.player.pos))
 
 
-        #for element in map.array:
-        #Faire chaque objet avec de base une fonction de render, qu'on "surchargera" pour les spécificitées
+        for element in map.array:
+            if not element.type in self.sprite.keys():
+                sys.stderr.write("Can't find texture for : " + element.type)
+                continue
+            #Gérer les animations plus tard
+            surface = self.resize(self.sprite[element.type][0], element.width, element.height)
+            new_surface_info = self.rotate(surface, element.angle)
+
+            self.win.blit(new_surface_info[0], new_surface_info[1].move(element.pos))
 
     def rotate(self, surface, angle):
         old_rect = pygame.Surface.get_rect(surface)

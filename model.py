@@ -30,6 +30,7 @@ class Map:
         self.width = 0
         self.height = 0
         self.model = model
+        self.array.append(Object(0.2, 163, (100, 100), "asteroid", 30, 30))
 
     def load(self, filename):
         """Lecture du fichier passé en argument"""
@@ -54,16 +55,25 @@ class Map:
         return player_pos
 
 class Object():
-    def __init__(self):
-        self.speed = 0
-        self.angle = 0
-        self.pos = (0, 0)
+    def __init__(self, speed = 0, angle = 0, pos = (0, 0), type = "", width = 0, height = 0):
+        self.speed = speed
+        self.angle = angle
+
+        self.pos = pos
+
+        self.width = width
+        self.height = height
+
+        self.type = type
 
     def calculate_new_coord(self):
         delta_x = self.speed * cos((self.angle - 90)%360 * 3.14/180)
         delta_y = self.speed * sin((self.angle - 90)%360 * 3.14/180)
 
         return (self.pos[0] + delta_x, self.pos[1] + delta_y)
+
+    def play(self):
+        self.pos = self.calculate_new_coord()
 
 class Player():
     """Class modélisant le joueur"""
@@ -135,7 +145,6 @@ class Player():
         angle_limit = 1 - (self.V / self.V_Max)/3
         if angle_limit < 0.3:
             angle_limit = 0.3
-        print(self.angle)
 
         if self.go_left:
             if  self.V_angle - self.angle_unit > -self.angle_max:
@@ -171,3 +180,5 @@ class Model:
 
     def tick(self):
         self.player.move()
+        for element in self.map.array:
+            element.play()
