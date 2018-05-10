@@ -43,7 +43,7 @@ class View:
                 continue
             #Gérer les animations plus tard
             surface = self.resize(self.sprite[element.type][0], element.width, element.height)
-            new_surface_info = self.rotate(surface, element.angle)
+            new_surface_info = self.rotate(surface, (element.angle + element.rotation)%360)
 
             self.win.blit(new_surface_info[0], new_surface_info[1].move(element.pos))
 

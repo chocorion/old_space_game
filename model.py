@@ -30,7 +30,7 @@ class Map:
         self.width = 0
         self.height = 0
         self.model = model
-        self.array.append(Object(0.2, 163, (100, 100), "asteroid", 30, 30))
+        self.array.append(Object(0.3, 163, 0, -0.2, (100, 100), "asteroid", 30, 30))
 
     def load(self, filename):
         """Lecture du fichier passé en argument"""
@@ -55,9 +55,11 @@ class Map:
         return player_pos
 
 class Object():
-    def __init__(self, speed = 0, angle = 0, pos = (0, 0), type = "", width = 0, height = 0):
+    def __init__(self, speed, angle, rotation_angle, rotation_speed, pos, type, width, height):
         self.speed = speed
         self.angle = angle
+        self.rotation = rotation_angle
+        self.rotation_speed = rotation_speed
 
         self.pos = pos
 
@@ -74,6 +76,7 @@ class Object():
 
     def play(self):
         self.pos = self.calculate_new_coord()
+        self.rotation += self.rotation_speed
 
 class Player():
     """Class modélisant le joueur"""
