@@ -60,10 +60,10 @@ class Map:
 
     def add_random_asteroid(self):
         """self, speed, angle, rotation_angle, rotation_speed, pos, type, width, height"""
-        speed = randrange(0, 3)
+        speed = randrange(1, 10)
         angle = randrange(0, 360)
         rotation_angle = randrange(0, 360)
-        rotation_speed = randrange(0, 3)
+        rotation_speed = randrange(0, 6)
         pos = (randrange(0, 700), randrange(0, 1000))
         type = "asteroid"
         width = height = randrange(10, 50)
@@ -212,3 +212,5 @@ class Model:
         for element in self.map.array:
             element.play()
         self.check_player_collision()
+        if randrange(0, 100)%26 == 0:
+            self.map.add_random_asteroid()
