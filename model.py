@@ -9,10 +9,7 @@ V_MAX = 5
 ANGLE_MAX = 20
 
 def check_collision(x1, y1, h1, w1, x2, y2, h2, w2):
-    if (x1 > x2 and x1 < x2 + w2) or (x1 + w1 > x2 and x1 + w1 < x2 + w2):
-        if (y1 > y2 and y1 < y2 + h2) or (y1 + h1 > y2 and y1 + h1 < y2 + h2):
-            return True
-    return False
+    return x1 < x2 + w2 and x1 + w1 > x2 and y1 < y2 + h2 and y1 + h1 > y2
 
 class Event_Manager:
     """Class gérant tous les événements du jeu"""
