@@ -1,5 +1,5 @@
 ## TODO:
-#   * Fonction permettant de faire la rotation d'une image selon un angle donné à utiliser dans render_map
+#
 
 
 from model import *
@@ -10,6 +10,7 @@ DEFAULT_HEIGHT = 1000
 
 SPRITE_PLAYER = ["assets/player/ship_00.png"]
 SPRITE_ASTEROID = ["assets/asteroid/asteroid_00.png"]
+SPRITE_SHOOT = ["assets/shoot/Shoot_00.png"]
 
 
 class View:
@@ -23,7 +24,8 @@ class View:
 
         self.sprite = {
             "player": [pygame.image.load(sprite) for sprite in SPRITE_PLAYER],
-            "asteroid": [pygame.image.load(sprite) for sprite in SPRITE_ASTEROID]
+            "asteroid": [pygame.image.load(sprite) for sprite in SPRITE_ASTEROID],
+            "shoot": [pygame.image.load(sprite) for sprite in SPRITE_SHOOT]
         }
 
     def render_map(self):

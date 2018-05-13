@@ -24,7 +24,7 @@ class Event_Manager:
         return True
 
     def shoot(self, state):
-        sys.stderr.write("Shoot function not implemented yet !\n")
+        self.model.player_shoot_00()
         return True
 
 class Map:
@@ -34,7 +34,6 @@ class Map:
         self.width = 0
         self.height = 0
         self.model = model
-        self.array.append(Object(0.3, 163, 0, -0.2, (100, 100), "asteroid", 30, 30))
 
     def load(self, filename):
         """Lecture du fichier passé en argument"""
@@ -68,7 +67,10 @@ class Map:
         type = "asteroid"
         width = height = randrange(10, 50)
         asteroid = Object(speed, angle, rotation_angle, rotation_speed, pos, type, width, height)
-        self.array.append(asteroid)
+        self.add_obj(asteroid)
+
+    def add_obj(self, obj):
+        self.array.append(obj)
 
 class Object():
     def __init__(self, speed, angle, rotation_angle, rotation_speed, pos, type, width, height):
@@ -187,6 +189,9 @@ class Player():
 
         self.angle = (self.V_angle + self.angle)%360
 
+
+
+
 class Model:
     """Model du jeu"""
     def __init__(self):
@@ -205,6 +210,10 @@ class Model:
                 element.pos[0], element.pos[1], element.width, element.height):
                 print("COLLISION !")
         print(" ")
+
+    def player_shoot_00(self):
+        projectile = Object(10, self.player.angle, 0, 0, self.player.pos, "shoot", 20, 40)
+        self.map.add_obj(projectile)
 
 
     def tick(self):
