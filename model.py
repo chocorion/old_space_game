@@ -24,7 +24,7 @@ class Event_Manager:
         return True
 
     def shoot(self, state):
-        self.model.player_shoot_00()
+        self.model.player.active_shoot(state)
         return True
 
 class Map:
@@ -116,6 +116,7 @@ class Player():
         self.go_left = False        #                     va à gauche ?
         self.go_right = False       #                        à droite ?
         self.go_down = False        #Frein
+        self.shoot = False
 
     def update_move(self, dir, state):
         """Change l'état du joueur en fonction de la diréction donnée"""
@@ -189,6 +190,9 @@ class Player():
 
         self.angle = (self.V_angle + self.angle)%360
 
+    def active_shoot(self, state):
+        self.shoot = state
+
 
 
 
@@ -211,9 +215,6 @@ class Model:
                 print("COLLISION !")
         print(" ")
 
-    def player_shoot_00(self):
-        projectile = Object(10, self.player.angle, 0, 0, self.player.pos, "shoot", 20, 40)
-        self.map.add_obj(projectile)
 
 
     def tick(self):
@@ -223,3 +224,7 @@ class Model:
         self.check_player_collision()
         if randrange(0, 100)%26 == 0:
             self.map.add_random_asteroid()
+
+        if self.player.shoot:
+            projectile = Object(10, self.player.angle, 0, 0, self.player.pos, "shoot", 20, 40)
+            self.map.add_obj(projectile)
