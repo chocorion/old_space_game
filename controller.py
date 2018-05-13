@@ -5,7 +5,7 @@ class Controller:
     """Gère les interactions utilisateurs"""
     def __init__(self, event_manager):
         self.event_manager = event_manager
-        pygame.key.set_repeat(1,100)    #Permet la répétition de touche, interval de 200 ms
+        pygame.key.set_repeat(1,400)    #Permet la répétition de touche, interval de 200 ms
 
     def tick(self):
         for event in pygame.event.get():

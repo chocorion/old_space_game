@@ -212,12 +212,17 @@ class Model:
             if check_collision(
                 self.player.pos[0], self.player.pos[1], self.player.w, self.player.h,
                 element.pos[0], element.pos[1], element.width, element.height):
-                print("COLLISION !")
-        print(" ")
+                break
 
 
 
     def tick(self):
+        print("\033[2J")
+        print("Go_up = " + str(self.player.go_up))
+        print("Go_down = " + str(self.player.go_down))
+        print("Go_left = " + str(self.player.go_left))
+        print("Go_right = " + str(self.player.go_right))
+        print("Shoot = " + str(self.player.shoot))
         self.player.move()
         for element in self.map.array:
             element.play()
