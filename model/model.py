@@ -17,19 +17,21 @@ def check_collision(x1, y1, h1, w1, x2, y2, h2, w2):
 class Model:
     """Model du jeu"""
     def __init__(self, map_path=DEFAULT_MAP):
-        self.player = Player()
         self.map = Map(self)
 
         self.map_path = map_path
         self.load_map()
 
+        self.player = Player(self.map.getPlayerStartPos())
+
     def load_map(self):
         self.map.load(self.map_path)
 
     def check_player_collision(self):
+        playerX, playerY = self.player.getPosition()
         for element in self.map.array:
             if check_collision(
-                self.player.pos[0], self.player.pos[1], self.player.w, self.player.h,
+                playerX, playerY, self.player.getWidth(), self.player.getHeight(),
                 element.pos[0], element.pos[1], element.width, element.height):
                 break
 
@@ -43,7 +45,7 @@ class Model:
             self.map.add_random_asteroid()
 
         if self.player.isShooting():
-            projectile = Projectile(10, self.player.angle, 0, 0, self.player.pos, 20, 40)
+            projectile = Projectile(10, self.player.getAngle(), 0, 0, self.player.getPosition(), 20, 40)
             self.map.add_obj(projectile)
 
     def getPlayer(self):

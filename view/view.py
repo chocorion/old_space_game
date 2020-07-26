@@ -27,11 +27,12 @@ class View:
     def render_map(self):
         """Fonction permettant de dessiner le jeu à l'écran"""
         map = self.model.map
+        player = self.model.getPlayer()
 
-        player_surface = self.resize(self.sprite["player"][0], self.model.player.h, self.model.player.w)
-        rotate_player_surface = self.rotate(player_surface, self.model.player.angle)
+        player_surface = self.resize(self.sprite["player"][0], player.getHeight(), player.getWidth())
+        rotate_player_surface = self.rotate(player_surface, player.getAngle())
 
-        self.win.blit(rotate_player_surface[0], rotate_player_surface[1].move(self.model.player.pos))
+        self.win.blit(rotate_player_surface[0], rotate_player_surface[1].move(player.getPosition()))
 
 
         for element in map.array:

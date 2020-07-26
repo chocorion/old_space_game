@@ -28,7 +28,7 @@ class Map:
                     self.height = int(_row[1])
 
                 elif _row[0] == "player":
-                    self.model.player.pos = (int(_row[1]), int(_row[2]))
+                    self.playerPosition = (int(_row[1]), int(_row[2]))
         except:
             sys.stderr.write("Error in load map, can't open file.\n")
         return player_pos
@@ -40,3 +40,7 @@ class Map:
 
     def add_obj(self, obj):
         self.array.append(obj)
+
+
+    def getPlayerStartPos(self):
+        return self.playerPosition
