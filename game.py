@@ -1,26 +1,25 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+
 import pygame
 import sys
 
-from model import *
-from view import *
+from model.model import Model
+from controller.controller import Controller
+from view.view import View
 from controller import *
 
 pygame.display.init()
 pygame.font.init()
+
 clock = pygame.time.Clock()
 FPS = 60
 
 
-
-map_file = DEFAULT_MAP
 if len(sys.argv) == 2:
     map_file = sys.argv[1]
 
 model = Model()
-model.load_map(map_file)
-event_manager = Event_Manager(model)
-controller = Controller(event_manager)
+controller = Controller(model)
 view = View(model)
 
 
@@ -30,6 +29,5 @@ while True:
         break
     model.tick()
     view.tick()
-    #print(dt)
 
 pygame.quit()

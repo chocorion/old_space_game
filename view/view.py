@@ -1,9 +1,5 @@
-## TODO:
-#
-
-
 from model import *
-import pygame
+import pygame, sys
 
 DEFAULT_WIDTH = 700
 DEFAULT_HEIGHT = 1000
@@ -32,7 +28,6 @@ class View:
         """Fonction permettant de dessiner le jeu à l'écran"""
         map = self.model.map
 
-        #Vaut mieux une fonction qui tourne une image celon un certain angle, a faire
         player_surface = self.resize(self.sprite["player"][0], self.model.player.h, self.model.player.w)
         rotate_player_surface = self.rotate(player_surface, self.model.player.angle)
 
@@ -40,11 +35,12 @@ class View:
 
 
         for element in map.array:
-            if not element.type in self.sprite.keys():
-                sys.stderr.write("Can't find texture for : " + element.type)
-                continue
+            if not element.getName() in self.sprite.keys():
+                sys.stderr.write("Can't find texture for : " + element.getName())
+                sys.exit(1)
+
             #Gérer les animations plus tard
-            surface = self.resize(self.sprite[element.type][0], element.width, element.height)
+            surface = self.resize(self.sprite[element.getName()][0], element.width, element.height)
             new_surface_info = self.rotate(surface, (element.angle + element.rotation)%360)
 
             self.win.blit(new_surface_info[0], new_surface_info[1].move(element.pos))
